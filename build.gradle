@@ -10,5 +10,6 @@ repositories {
 }
 
 dependencies {
-
+    // https://mvnrepository.com/artifact/org.jfree/jfreechart
+    implementation group: 'org.jfree', name: 'jfreechart', version: '1.5.3'
 }
