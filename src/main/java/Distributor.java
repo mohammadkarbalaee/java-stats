@@ -1,7 +1,11 @@
 public class Distributor {
-  private final double[] zeroToOneData;
+  private double[] zeroToOneData;
 
   public Distributor(double[] zeroToOneData) {
+    this.zeroToOneData = zeroToOneData;
+  }
+
+  public void setZeroToOneData(double[] zeroToOneData) {
     this.zeroToOneData = zeroToOneData;
   }
 

@@ -15,14 +15,20 @@ import java.io.IOException;
 
 public class HistogramPlot implements ActionListener {
   private final double[] data;
-  private final String imageName;
+  private final String plotName;
   private File outputFile;
   private final JButton okButton;
   private final JFrame frame = new JFrame("java-stats");
+  private StatisticalCalculator statisticalCalculator;
+  private boolean isFinal = false;
 
-  public HistogramPlot(double[] data, String imageName) {
+  public void setStatisticalCalculator(StatisticalCalculator statisticalCalculator) {
+    this.statisticalCalculator = statisticalCalculator;
+  }
+
+  public HistogramPlot(double[] data, String plotName) {
     this.data = data;
-    this.imageName = imageName;
+    this.plotName = plotName;
     okButton = new JButton("OK");
     okButton.addActionListener(this);
     okButton.setSize(new Dimension(350,40));
@@ -31,9 +37,9 @@ public class HistogramPlot implements ActionListener {
   public File createHistogram() throws IOException {
     HistogramDataset dataset = new HistogramDataset();
     dataset.addSeries("X", this.data, 35);
-    JFreeChart histogram = ChartFactory.createHistogram("Histogram Plot",
+    JFreeChart histogram = ChartFactory.createHistogram(this.plotName,
         "data", "frequency", dataset);
-    File outputFile = new File(System.getProperty("user.dir") + this.imageName + ".png");
+    File outputFile = new File(System.getProperty("user.dir") + "plot.png");
     ChartUtils.saveChartAsPNG(outputFile, histogram, 1024, 800);
     this.outputFile = outputFile;
     return outputFile;
@@ -55,10 +61,21 @@ public class HistogramPlot implements ActionListener {
     frame.setVisible(true);
   }
 
+  public void setFinal(boolean aFinal) {
+    isFinal = aFinal;
+  }
+
   @Override
   public void actionPerformed(ActionEvent e) {
-    if (e.getSource() == okButton){
+    if (e.getSource() == okButton) {
       frame.setVisible(false);
+      if (isFinal) {
+
+      } else {
+        NumericalFrame numericalFrame = new NumericalFrame(this.statisticalCalculator.getK());
+        numericalFrame.setK(this.statisticalCalculator.getK());
+        numericalFrame.showExVarx(statisticalCalculator.getEx(),statisticalCalculator.getVarx());
+      }
     }
   }
 }

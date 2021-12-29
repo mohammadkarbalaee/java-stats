@@ -32,7 +32,8 @@ public class InputFrame extends JFrame implements ActionListener {
     if (event.getSource() == submitButton) {
       int n = Integer.parseInt(this.nTextField.getText());
       StatisticalCalculator statisticalCalculator = new StatisticalCalculator(n,n);
-      HistogramPlot histogramPlot = new HistogramPlot(statisticalCalculator.getDistributedData(),"test");
+      HistogramPlot histogramPlot = new HistogramPlot(statisticalCalculator.getDistributedData(),"Histogram of Random data");
+      histogramPlot.setStatisticalCalculator(statisticalCalculator);
       try {
         histogramPlot.createHistogram();
         histogramPlot.showHistogramInWindow();
@@ -40,7 +41,6 @@ public class InputFrame extends JFrame implements ActionListener {
         e.printStackTrace();
       }
       this.setVisible(false);
-      NumericalFrame numericalFrame = new NumericalFrame(statisticalCalculator.getEx(),statisticalCalculator.getVarx());
     }
   }
 }
