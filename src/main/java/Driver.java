@@ -1,15 +1,23 @@
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 
 public class Driver {
 
-  private static int N = 500;
+  private static int N = 5000;
   public static void main(String[] args) throws IOException {
     Distributor distributor = new Distributor(makeRandomBetweenZeroAndOne(N));
     double[] distributedRandomData = distributor.getDistributedDataset();
     double[] probabilityDensity = getProbabilityDensities(distributedRandomData);
 
+    //making histogram
     HistogramPlot histogramPlot = new HistogramPlot(distributedRandomData,"test");
-    histogramPlot.createHistogram();
+    File histogramImage = histogramPlot.createHistogram();
+
+    //showing histogram
+    showHistogramInWindow(histogramImage);
 
     //printing mathematical expectation
     double mathematicalExpectationOfX = Ex(distributedRandomData, probabilityDensity);
@@ -54,4 +62,18 @@ public class Driver {
     double ExSquared = Ex(dataset,probabilities);
     return ExSquared - Math.pow(Ex,2);
   }
+
+  private static void showHistogramInWindow(File histogramImage) throws IOException {
+    JPanel panel = new JPanel();
+    BufferedImage image = ImageIO.read(histogramImage);
+    JLabel label = new JLabel(new ImageIcon(image));
+    panel.add(label);
+    JFrame.setDefaultLookAndFeelDecorated(true);
+    JFrame frame = new JFrame("java-stats");
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    frame.add(panel);
+    frame.pack();
+    frame.setVisible(true);
+  }
+
  }

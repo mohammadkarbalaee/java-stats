@@ -15,12 +15,13 @@ public class HistogramPlot {
     this.imageName = imageName;
   }
 
-  public void createHistogram() throws IOException {
+  public File createHistogram() throws IOException {
     HistogramDataset dataset = new HistogramDataset();
     dataset.addSeries("X", this.data, 35);
     JFreeChart histogram = ChartFactory.createHistogram("Histogram Plot",
         "data", "frequency", dataset);
     File outputFile = new File(System.getProperty("user.dir") + "/histograms/" + this.imageName + ".png");
     ChartUtils.saveChartAsPNG(outputFile, histogram, 1280, 720);
+    return outputFile;
   }
 }
