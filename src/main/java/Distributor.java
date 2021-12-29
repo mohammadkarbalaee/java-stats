@@ -10,7 +10,7 @@ public class Distributor {
   }
 
   private double distribute(double data) {
-    return Math.sqrt(Math.sqrt(400 * data));
+    return Math.sqrt(2 * data);
   }
 
   public double[] getDistributedDataset() {

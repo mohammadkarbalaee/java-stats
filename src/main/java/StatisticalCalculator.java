@@ -45,7 +45,11 @@ public class StatisticalCalculator {
   }
 
   private double fx(double data) {
-    return Math.pow(data,3) / 100;
+    if (data >= 0 && data <= Math.sqrt(2)) {
+      return data;
+    } else {
+      return 0;
+    }
   }
 
   public void Ex() {
@@ -53,15 +57,16 @@ public class StatisticalCalculator {
     for (int i = 0; i < this.n; i++) {
       mathematicalExpectation += this.distributedData[i] * this.probabilityDensities[i];
     }
-    this.Ex = mathematicalExpectation;
+
+    this.Ex = mathematicalExpectation / this.n;
   }
 
   public void ExSquared() {
     double mathematicalExpectation = 0;
     for (int i = 0; i < this.n; i++) {
-      mathematicalExpectation += this.distributedData[i] * this.distributedData[i] * this.probabilityDensities[i];
+      mathematicalExpectation += Math.pow(this.distributedData[i],2) * this.probabilityDensities[i];
     }
-    this.Ex2 = mathematicalExpectation;
+    this.Ex2 = mathematicalExpectation / this.n;
   }
 
   private void Varx() {
@@ -104,7 +109,7 @@ public class StatisticalCalculator {
     for (int i = 0; i < this.n; i++) {
       mathematicalExpectation += Math.pow(means[i],powerX) * dataDensity[i];
     }
-    return mathematicalExpectation;
+    return mathematicalExpectation / this.n;
   }
 
   public double getVarMean(double Ex2,double Ex){
